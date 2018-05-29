@@ -4,9 +4,11 @@ var game=new Phaser.Game(360,640,Phaser.AUTO);
 //creating gameState to hold the states of the game
 var GameState=
 {
+   
     //used to initialize game settings
     init : function()
     {
+        
         this.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
         
         this.scale.pageALignHorizontally=true;
@@ -38,13 +40,59 @@ var GameState=
         //adding custom parameters to the pet sprite
         this.pet.customParams={health:100,fun:100};
         
+        //draggable pet
+        this.pet.inputEnabled=true;
+        this.pet.input.enableDrag();
+        
         this.apple=game.add.sprite(72,570,'apple');
+        this.apple.anchor.setTo(0.5);
+        this.apple.inputEnabled=true;
+        this.apple.input.pixelPerectClick=true;
+        this.apple.customParams={health:20};
+        this.apple.events.onInputDown.add(this.pickItem);
+        
+        
         this.candy=game.add.sprite(144,570,'candy');
+        this.candy.anchor.setTo(0.5);
+        this.candy.inputEnabled=true;
+        this.candy.input.pixelPerectClick=true;
+        this.candy.customParams={health: -10,fun:10};
+        this.candy.events.onInputDown.add(this.pickItem);
+        
         this.rotate=game.add.sprite(288,570,'rotate');
+        this.rotate.anchor.setTo(0.5);
+        this.rotate.inputEnabled=true;
+        this.rotate.input.pixelPerectClick=true;
+        this.rotate.events.onInputDown.add(this.rotatePet);
+        
         this.rubberDuck=game.add.sprite(216,570,'rubberDuck');
+        this.rubberDuck.anchor.setTo(0.5);
+        this.rubberDuck.inputEnabled=true;
+        this.rubberDuck.input.pixelPerectClick=true;
+        this.rubberDuck.customParams={fun:20};
+        this.rubberDuck.events.onInputDown.add(this.pickItem);
+        
+        this.buttons=[this.apple,this.candy,this.rotate,this.rubberDuck];
+        this.selectedItem=null;
+        
+        
+        
         
         
     },
+    
+    pickItem : function(sprite, event)
+    {
+        console.log('item is picked');
+        
+    },
+    
+    rotatePet : function(sprite, event)
+    {
+        console.log('rotating....');
+    },
+    
+   
 };
 
 // adding state variable to the game window.
