@@ -73,8 +73,14 @@ var GameState=
         this.rubberDuck.customParams={fun:20};
         this.rubberDuck.events.onInputDown.add(this.pickItem,this);
         
+        //array of the sprites for manipulation
         this.buttons=[this.apple,this.candy,this.rotate,this.rubberDuck];
+        
+        //variable to hold the current selection
         this.selectedItem=null;
+        
+        //boolean to check ui is blocked or not
+        this.uiBlocked=false;
         
         
         
@@ -84,17 +90,45 @@ var GameState=
     
     pickItem : function(sprite, event)
     {
-        console.log('item is picked');
-        
+        //if ui is not blocked we can click any of the sprite
+        if(!this.uiBlocked)
+            {
+                console.log('Item is picked');
+                
+                //clear selection will clear the previous selection and set alpha to 1 again 
+                this.clearSelection();
+                
+                //assigning the sprite as selected
+                this.selectedItem=sprite;
+                sprite.alpha=0.4;
+                
+            }
 
         
     },
     
     rotatePet : function(sprite, event)
     {
-        console.log('rotating....');
+        if(!this.uiBlocked)
+            {
+                console.log('rotating....');
+                this.uiBlocked=true;
+                
+                this.clearSelection();
+                this.selectedItem=sprite;
+            }
     },
     
+    clearSelection : function()
+    {
+        this.buttons.forEach(function(element, index){
+                             
+                element.alpha=1;             
+                             
+        });
+        
+        this.selectedItem=null;
+    },
    
 };
 
