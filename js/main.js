@@ -89,6 +89,16 @@ var GameState=
         //boolean to check ui is blocked or not
         this.uiBlocked=false;
         
+        var style={font :'20px Comic Sans MS', fill : '#006699'};
+        
+        this.game.add.text(10,20,'Health:',style);
+        this.game.add.text(140,20,'Fun:',style);
+        
+        this.healthText=this.game.add.text(80,20,'',style);
+        this.funText=this.game.add.text(180,20,'',style);
+        
+        this.updateText();
+        
         
         
         
@@ -100,7 +110,6 @@ var GameState=
         //if ui is not blocked we can click any of the sprite
         if(!this.uiBlocked)
             {
-                console.log('Item is picked');
                 
                 //clear selection will clear the previous selection and set alpha to 1 again 
                 this.clearSelection();
@@ -118,7 +127,6 @@ var GameState=
     {
         if(!this.uiBlocked)
             {
-                console.log('rotating....');
                 
                 this.uiBlocked=true;
                 
@@ -139,6 +147,7 @@ var GameState=
                     this.uiBlocked=false;
                     
                     this.pet.customParams.fun+=sprite.customParams.fun;
+                    this.updateText();
                     
                     
                 },this);
@@ -191,11 +200,18 @@ var GameState=
                                 this.pet.customParams[stat]+=newItem.customParams[stat];
                             }
                     }
+                    this.updateText();
                   
                     
                 },this);
             } 
         
+    },
+    
+    updateText : function()
+    {
+        this.healthText.setText(this.pet.customParams.health);
+        this.funText.setText(this.pet.customParams.fun);
     }
    
 };
