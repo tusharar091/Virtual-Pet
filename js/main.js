@@ -38,8 +38,11 @@ var GameState=
         
         this.background.events.onInputDown.add(this.placeItem,this);
         
-        this.pet=game.add.sprite(100,400,'pet');
+        this.pet=game.add.sprite(100,400,'pet',0);
         this.pet.anchor.setTo(0.5);
+        
+        //spritesheet animation
+        this.pet.animations.add('anime',[1,2,3,2,1],5,false);
         
         //adding custom parameters to the pet sprite
         this.pet.customParams={health:100,fun:100};
@@ -172,7 +175,11 @@ var GameState=
                 {
                 
                     this.uiBlocked=false;
+                    
+                    
+                    this.pet.play('anime');
                     newItem.destroy();
+                    
                     
                     var stat;
                     
