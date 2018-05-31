@@ -34,6 +34,9 @@ var GameState=
     create : function()
     {
         this.background=game.add.sprite(0,0,'backyard');
+        this.background.inputEnabled=true;
+        
+        this.background.events.onInputDown.add(this.placeItem,this);
         
         this.pet=game.add.sprite(100,400,'pet');
         this.pet.anchor.setTo(0.5);
@@ -64,6 +67,7 @@ var GameState=
         this.rotate.anchor.setTo(0.5);
         this.rotate.inputEnabled=true;
         this.rotate.input.pixelPerectClick=true;
+        this.rotate.customParams={fun:10};
         this.rotate.events.onInputDown.add(this.rotatePet,this);
         
         this.rubberDuck=game.add.sprite(216,570,'rubberDuck');
@@ -112,10 +116,29 @@ var GameState=
         if(!this.uiBlocked)
             {
                 console.log('rotating....');
+                
                 this.uiBlocked=true;
                 
                 this.clearSelection();
+                
+                sprite.alpha=0.4;
                 this.selectedItem=sprite;
+                
+                var petRotation=this.game.add.tween(this.pet);
+                
+                petRotation.to({angle : 720}, 1000);
+                
+                petRotation.start();
+                
+                petRotation.onComplete.add(function()
+                {
+                    this.clearSelection();
+                    this.uiBlocked=false;
+                    
+                    this.pet.customParams.fun+=sprite.customParams.fun;
+                    
+                    
+                },this);
             }
     },
     
@@ -129,6 +152,22 @@ var GameState=
         
         this.selectedItem=null;
     },
+    
+    placeItem : function(sprite,event)
+    {
+        var x=event.position.x;
+        var y=event.position.y;
+        
+        if(this.selectedItem!=null&&!this.uiBlocked)
+            {
+        var newItem= this.game.add.sprite(x,y,this.selectedItem.key);
+        newItem.anchor.setTo(0.5);
+        newItem.customParams=this.selectedItem.customParams;
+                this.petMovement=this.game.add.tween(this.pet);
+                this.petMovement.to({x: newItem.position.x, y: newItem.position.y},1000);
+                this.petMovement.start();
+            } 
+    }
    
 };
 
