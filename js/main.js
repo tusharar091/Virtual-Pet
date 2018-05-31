@@ -160,13 +160,35 @@ var GameState=
         
         if(this.selectedItem!=null&&!this.uiBlocked)
             {
-        var newItem= this.game.add.sprite(x,y,this.selectedItem.key);
-        newItem.anchor.setTo(0.5);
-        newItem.customParams=this.selectedItem.customParams;
+                var newItem= this.game.add.sprite(x,y,this.selectedItem.key);
+                newItem.anchor.setTo(0.5);
+                newItem.customParams=this.selectedItem.customParams;
+                
+                this.uiBlocked=true;
                 this.petMovement=this.game.add.tween(this.pet);
                 this.petMovement.to({x: newItem.position.x, y: newItem.position.y},1000);
                 this.petMovement.start();
+                this.petMovement.onComplete.add(function()
+                {
+                
+                    this.uiBlocked=false;
+                    newItem.destroy();
+                    
+                    var stat;
+                    
+                    for(stat in newItem.customParams)
+                    {
+                        if(newItem.customParams.hasOwnProperty(stat))
+                            {
+                        
+                                this.pet.customParams[stat]+=newItem.customParams[stat];
+                            }
+                    }
+                  
+                    
+                },this);
             } 
+        
     }
    
 };
