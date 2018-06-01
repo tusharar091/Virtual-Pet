@@ -99,6 +99,8 @@ var GameState=
         
         this.updateText();
         
+        this.statReducer=this.game.time.events.loop(Phaser.Timer.SECOND * 5,this.decreaseStat,this);
+        
         
         
         
@@ -212,7 +214,30 @@ var GameState=
     {
         this.healthText.setText(this.pet.customParams.health);
         this.funText.setText(this.pet.customParams.fun);
-    }
+    },
+    
+    decreaseStat : function()
+    {
+        this.pet.customParams.health-=10;
+        this.pet.customParams.fun-=10;
+        this.updateText();
+    },
+    
+    update : function()
+    {
+        if(this.pet.customParams.health<=0||this.pet.customParams.fun<=0)
+            {
+                this.pet.frame=4;
+                this.uiBlocked=true;
+                
+                this.game.time.events.add(2000, this.gameOver, this);
+            }
+    },
+    
+    gameOver : function()
+    {
+        this.game.state.restart();
+    },
    
 };
 
