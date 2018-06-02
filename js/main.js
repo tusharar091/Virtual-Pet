@@ -6,6 +6,8 @@ game.state.add('GameState',GameState);
 game.state.add('PreloadState',PreloadState);
 game.state.add('HomeState',HomeState);
 game.state.add('BootState',BootState);
+
+//initially starting bootState 
 game.state.start('BootState');
 
 

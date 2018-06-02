@@ -1,13 +1,8 @@
 var PreloadState={
+    
+    //preloading the assets for HomeScreen as well as the GameScreen
   preload : function()
-    {
-        this.logo=this.add.sprite(this.game.world.centerX,this.game.world.centerY,'logo');
-        this.logo.anchor.setTo(0.5);
-        
-        this.progressBar=this.add.sprite(this.game.world.centerX,this.game.world.centerY+128,'bar');
-        this.progressBar.anchor.setTo(0.5);
-        
-        this.load.setPreloadSprite(this.progressBar);
+    { 
         this.load.image('backyard','assets/images/backyard.png');
         this.load.image('apple','assets/images/apple.png');
         this.load.image('arrow','assets/images/arrow.png');
@@ -21,6 +16,18 @@ var PreloadState={
     
     create : function()
     {
+        // creating the logo
+        this.logo=this.add.sprite(this.game.world.centerX,this.game.world.centerY,'logo');
+        this.logo.anchor.setTo(0.5);
+        
+        // creating the progressBar
+        this.progressBar=this.add.sprite(this.game.world.centerX,this.game.world.centerY+128,'bar');
+        this.progressBar.anchor.setTo(0.5);
+        
+        //this method breaks the bar sprite into portion and shows the progress until assets are loaded
+        this.load.setPreloadSprite(this.progressBar);
+        
+        //Firing HomeState from preloadState
         this.state.start('HomeState');
     }
 };
