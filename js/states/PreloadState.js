@@ -21,6 +21,6 @@ var PreloadState={
     
     create : function()
     {
-        this.state.start('GameState');
+        this.state.start('HomeState');
     }
 };

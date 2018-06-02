@@ -3,18 +3,7 @@ var GameState=
 {
     
     //used to load assets before game starts
-    preload : function()
-    {
-        this.load.image('backyard','assets/images/backyard.png');
-        this.load.image('apple','assets/images/apple.png');
-        this.load.image('arrow','assets/images/arrow.png');
-        this.load.image('candy','assets/images/candy.png');
-        this.load.image('rotate','assets/images/rotate.png');
-        this.load.image('rubberDuck','assets/images/rubber_Duck.png');
-        
-        this.load.spritesheet('pet','assets/images/pet.png',97,83,5,1,1);
-
-    },
+    
     
     //executed after preload is finished ,used for creating gameObjects
     create : function()
@@ -222,7 +211,8 @@ var GameState=
     
     gameOver : function()
     {
-        this.game.state.restart();
+//        this.game.state.restart();
+            this.state.start('HomeState',true, false,'Game Over');
     },
    
 };
